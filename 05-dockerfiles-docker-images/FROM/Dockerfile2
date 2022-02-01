@@ -1,0 +1,3 @@
+# docker build -t nginx_custom:v1 -f Dockerfile2 .
+# need to specify file name AND context when file is not named 'Dockerfile'
+FROM nginx:alpine

@@ -1,0 +1,4 @@
+FROM nginx:alpine
+
+# Copy the app directory and put in the default location where nginx serves from
+COPY ./app /usr/share/nginx/html

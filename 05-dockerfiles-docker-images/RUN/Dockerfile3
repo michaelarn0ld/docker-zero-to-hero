@@ -1,0 +1,4 @@
+FROM nginx:alpine
+
+# You can run any linux command available in RUN
+RUN echo "Overwrite home page" > /usr/share/nginx/html/index.html
