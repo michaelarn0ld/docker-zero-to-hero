@@ -33,11 +33,16 @@ Commands
 * `ADD` - get files from the internet (downloadable links) and add to the image
 * `ENV` - define environment variables
 * `WORKDIR` - set the directory that other `Dockerfile` commands get excecuted with
-respect to; you can change this with multiple `WORKDIR` commands
-* `LABEL` -
-* `USER` -
-* `ARG` -
-* `CMD` -
+respect to; you can alter this if you need to change directories
+* `LABEL` - No functionality, just metadata about our image
+* `USER` - After you add users via `RUN` commands, use this to switch to the users
+you made in your image
+* `ARG` - allows us to pass command line arguments during docker build; use
+the --build-arg key=value tag. Key should be aligned with ARG key=default in
+the `Dockerfile`
+* `CMD` - command that is executed when you create an instance (container) of 
+the image; the container needs a process running IN THE FOREGROUND to stay alive,
+when the process terminates, the container exits immediately
 
 ## DOCKER IMAGES
 
