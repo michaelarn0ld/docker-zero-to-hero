@@ -15,9 +15,12 @@ covered:
 
 ## DOCKERFILE
 Basic docker command to build an image from a `Dockerfile`
+
 ```docker build -t image_name:version .```
+
 The above command works when your `Dockerfile` is named `Dockerfile`. If it has
 another file name, you must specify:
+
 ```docker build -t image_name:version -f {file_name.ext} .```
 
 Reference: [Dockerfile](https://docs.docker.com/engine/reference/builder/)
