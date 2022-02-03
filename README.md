@@ -44,7 +44,30 @@ the `Dockerfile`
 the image; the container needs a process running IN THE FOREGROUND to stay alive,
 when the process terminates, the container exits immediately
 
+In the command:
+
+`docker build -t image_name:version -f {file_name.ext} .`
+----
+
+## DOCKER CONTEXT AND IGNORE
+The `.dockerignore` file should live in the root of your context; if you want to
+ignore two directories, `foo/` and `bar/` from being considered in your context,
+then you `printf "%s\n" "foo/" "bar/" > .dockerignore`
+
+The `.` at the end provides the context for all the commands in the `Dockerfile`;
+it tells docker to look in our current directory to give context to our build.
+Say we have `COPY cmd.sh /scripts/cmd.sh` in our `Dockerfile` but we execute the
+build command in a directory that doesn't have a file `cmd.sh`, then the build
+will fail because the `.` only scans the directory (and subdirectories) from 
+where the build command was executed.
+----
+
 ## DOCKER IMAGES
+Dangling images are those that have a <none>:<none> identifer when you execute
+the command `docker images`. If you want a way to quickly remove these danglers,
+then run the command:
+
+`docker rmi $(docker images -f dangling=true -q)`
 
 ## DOCKER CONTAINERS
 
