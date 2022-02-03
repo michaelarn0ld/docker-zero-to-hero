@@ -53,7 +53,7 @@ The `.dockerignore` file should live in the root of your context; if you want to
 ignore two directories, `foo/` and `bar/` from being considered in your context,
 then you `printf "%s\n" "foo/" "bar/" > .dockerignore`
 
-The `.` at the end provides the context for all the commands in the `Dockerfile`;
+* The `.` at the end provides the context for all the commands in the `Dockerfile`;
 it tells docker to look in our current directory to give context to our build.
 Say we have `COPY cmd.sh /scripts/cmd.sh` in our `Dockerfile` but we execute the
 build command in a directory that doesn't have a file `cmd.sh`, then the build
