@@ -43,13 +43,12 @@ the `Dockerfile`
 * `CMD` - command that is executed when you create an instance (container) of 
 the image; the container needs a process running IN THE FOREGROUND to stay alive,
 when the process terminates, the container exits immediately
-
-In the command:
-
-`docker build -t image_name:version -f {file_name.ext} .`
 ----
 
 ## DOCKER CONTEXT AND IGNORE
+In the command:
+
+`docker build -t image_name:version -f {file_name.ext} .`
 The `.dockerignore` file should live in the root of your context; if you want to
 ignore two directories, `foo/` and `bar/` from being considered in your context,
 then you `printf "%s\n" "foo/" "bar/" > .dockerignore`
