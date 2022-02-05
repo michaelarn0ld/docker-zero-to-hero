@@ -68,6 +68,13 @@ then run the command:
 
 `docker rmi $(docker images -f dangling=true -q)`
 
+Multistage allows us to clean up our final build by using a preliminary set of
+layers to perform some operations and then copy the things we need from the 
+first set of layers into a final images. See `06-**/MULTI_STAGE` for an example
+where we use a multistage build to use a `maven` container to build a `jar`,
+then we move the `jar` to a new `openjdk` layer so that we don't have to keep
+all the bulky source code and maven dependencies in our final image.
+
 ## DOCKER CONTAINERS
 
 ## DOCKER VOLUMES
