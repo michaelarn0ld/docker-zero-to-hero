@@ -76,6 +76,30 @@ then we move the `jar` to a new `openjdk` layer so that we don't have to keep
 all the bulky source code and maven dependencies in our final image.
 
 ## DOCKER CONTAINERS
+* `docker rename old_name new_name` to rename a container
+* `docker run --rm -d -p 9090:80 image_name` start a container from `image_name`
+and expose your machines 9090 port, which is mapped to port 80 of the container
+* `free -h` execute on docker host machine to see how much resources we have.
+* `grep "model name" /proc/cpuinfo | wc -l` to see how many threads
+we have available
+* `docker stats container_name(s)` to see the resources that a container is using;
+we can use this info to limit ram and CPU usage.
+* `docker run --help | grep memory` filters docker commands so we can see memory
+specific tools
+* `docker run --rm -d -e "myvar=1234" -e "anothervar=456" nginx:alpine` set 
+env variables with `-e`
+* `docker run -d --name test --memory "200mb" nginx:alpine` limit `test` to
+a maximum of 200mb total memory usage.
+* `docker run --help | grep cpu` filters docker commands so we can see cpu
+specific tools
+* `docker run -d --name test2 --memory "400mb" --cpuset-cpus 0,3 nginx:alpine`
+limit `test2` to a maximum of 400mb total memory usage and use CPUs 0 and 3; we
+can also provide a range of CPUs by `0-3`.  
+* `docker cp source container_name:/path/to/destination/filename.ext` copy stuff
+`source` from docker host to container; when container dies, the file we copied
+inside of it also dies. For persistent data, put the copy at the Dockerfile level
+* `docker cp container:/path/to/source/stuff.ext destination` copy stuff from
+docker container to the docker host.
 
 ## DOCKER VOLUMES
 
