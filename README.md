@@ -12,6 +12,9 @@ covered:
 * Docker networks
 * Docker compose
 
+By default, the Docker root is at `/var/lib/docker` \ 
+Get Docker root info -> `docker info | grep Root`
+
 
 ## DOCKERFILE
 Basic docker command to build an image from a `Dockerfile`
@@ -43,6 +46,9 @@ the `Dockerfile`
 * `CMD` - command that is executed when you create an instance (container) of 
 the image; the container needs a process running IN THE FOREGROUND to stay alive,
 when the process terminates, the container exits immediately
+* `VOLUME /path/to/source` - allows us to create an anonymous volume that copies
+data from `/path/to/source` in our container filesystem to an anonymous volume on
+our host machine.
 ----
 
 ## DOCKER CONTEXT AND IGNORE
@@ -74,6 +80,7 @@ first set of layers into a final images. See `06-**/MULTI_STAGE` for an example
 where we use a multistage build to use a `maven` container to build a `jar`,
 then we move the `jar` to a new `openjdk` layer so that we don't have to keep
 all the bulky source code and maven dependencies in our final image.
+----
 
 ## DOCKER CONTAINERS
 * `docker rename old_name new_name` to rename a container
@@ -100,8 +107,36 @@ can also provide a range of CPUs by `0-3`.
 inside of it also dies. For persistent data, put the copy at the Dockerfile level
 * `docker cp container:/path/to/source/stuff.ext destination` copy stuff from
 docker container to the docker host.
+* `docker commit container_name final_image_name` capture state of container so
+the changes are persistent and can be rebooted into a new container when you
+destroy THIS container. Turns THIS container into an image.
+* `docker run -d image_name [ARGS...]` the `[ARGS...]` after the image_name will
+override the `CMD` from `Dockerfile` when you start up a docker container.
+* `sudo du -sh /path/to/target` this command shows the total disk usage of a 
+specific target directory or file.
+* `sudo systemctl stop docker` stop the docker service
+* `sudo systemctl start docker` start the docker service
+----
 
 ## DOCKER VOLUMES
+*`docker run ... -v /mnt/mysql:/var/lib/mysql ...` maps a directory from your docker
+host to a directory in the container. Store all the information from the container
+`/var/lib/mysql` in the `/mnt/mysql` directory on your machine. This command 
+works in both directions; you can do it to start a fresh container or you can
+do it to boot data from `/mnt/mysql` into a new container.
+* `docker volume create volume_name` creates a folder under the docker root 
+directory (in the volumes subdirectory) with the name that you specified.
+* `docker run ... -v volume_name:/var/lib/mysql` maps the `volume_name` to the
+container directory (all data inside) `/var/lib/mysql ...`
+* `docker rm -v container_name` dangerous command because it removes the container
+as well as the volume associated with the container; this does not work for bind
+volumes or for named volumes, the `-v` flag is only available for anonymous vols.
+Bind volumes and named volumes are persistent and would need need manually be 
+removed by navigating and executing on the host filesystem.
+* `docker volume rm $(docker volume ls -f dangling=true -q)` remove dangling
+volumes that are found.
+* Docker volumes can be shared; please reference the instructions and files in
+`/08-shared-volumes/` to see an example of this.
 
 ## DOCKER NETWORKS
 

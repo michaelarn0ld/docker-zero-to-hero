@@ -1,0 +1,19 @@
+docker build -t generator .
+
+Builds the generator image. Keep in mind that we are executing start.sh on
+startup. This is a while true command so when the container is running, it just
+keeps appending the date every 5 seconds to a file called index.html in /opt.
+
+docker run -d --name gen -v $PWD/gen:/opt generator
+
+Here, we start a new container, gen, from our generator image. We are storing
+all the data from /opt (which is just the index.html file) to a volume in
+$PWD/gen.
+
+docker run -d --name nginx_test -v $PWD/gen:/usr/share/nginx/html -p 9090:80 nginx:alpine
+
+Start a new contianer, nginx_test, using the nginx:alpine image, exposed on our
+machine port 9090 mapped to container port 80. Use the data from $PWD/gen and map
+it to the container directory /usr/shar/nginx/html. Effectively, we have one container
+which is adding data to the volume $PWD/gen (gen container) and one container
+which is reading that data in real time as it updates (nginx_test container)
